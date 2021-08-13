@@ -142,6 +142,7 @@ class Quantization():
         return quant_list
 
 
+# class Quantization에서 선언한 quant list와 픽셀들을 거리순으로 맞춰주는 것
 def quantloader(f_set, q_list):
     q_map = []
     q_list = torch.Tensor(q_list)
@@ -160,6 +161,7 @@ def quantloader(f_set, q_list):
     return np.array(q_map)
 
 
+# 7~255 까지의 픽셀을 가지는 CNN feature map이 들어왔을 때, -0.66~-0.02 값으로 quantization
 def cnn_quantization(fm_set):
     fm_q = [int(7 + (255 - 7) / 31 * i) for i in range(32)]
     q = [-0.66 + (-0.02 + 0.66) / 31 * i for i in range(32)]

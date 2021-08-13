@@ -9,14 +9,14 @@ import os
 
 owd = os.getcwd()
 os.chdir('dataset')
-im_t, im_f = data_load('CIS')                                               # 120 x 160 image -> list(np.array)
-im_ts, im_fs = cis_scaling(im_t), cis_scaling(im_f)                      # 120 x 160 image with min_max scaled (0 ~ 0.8)
-fm_t, fm_f = get_fmap(im_ts), get_fmap(im_fs)                               # 30 x 40 feature map -> list(torch.Tensor)
+im_t, im_f = data_load('CIS')                                              # 120 x 160 image -> list(np.array)
+im_ts, im_fs = cis_scaling(im_t), cis_scaling(im_f)                        # 120 x 160 image with min_max scaled (0 ~ 0.8)
+fm_t, fm_f = get_fmap(im_ts), get_fmap(im_fs)                              # 30 x 40 feature map -> list(torch.Tensor)
 quant_list = quant.Quantization().gamma()                                  # Load quantization list
-qm_t, qm_f = quantloader(fm_t, quant_list), quantloader(fm_f, quant_list)# Quantized Feature map -> list(list(np.array))
+qm_t, qm_f = quantloader(fm_t, quant_list), quantloader(fm_f, quant_list)  # Quantized Feature map -> list(list(np.array))
 
-tr_x, ts_x, tr_y, ts_y = classifier.datasetloader(qm_t, qm_f)               # train_test split
-table = classifier.train_classifier(tr_x, tr_y, ts_x, ts_y)                 # classifiers along with diff params
+tr_x, ts_x, tr_y, ts_y = classifier.datasetloader(qm_t, qm_f)              # train_test split
+table = classifier.train_classifier(tr_x, tr_y, ts_x, ts_y)                # classifiers along with diff params
 
 r1, r2, r3, cm1, cm2, cm3, cnt1, cnt2, cnt3, p1, p2, p3 = best_model(table, tr_x, tr_y, ts_x, ts_y) # get results
 
