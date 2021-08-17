@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 
 
+# Quantization이 끝난 feature map을 0.8, 0.2 비율로 train_test split
 def datasetloader(qm_t, qm_f):
     X = np.concatenate((qm_t, qm_f), axis=0)
     y = np.zeros([len(qm_t) + len(qm_f), 1], dtype ='int')
@@ -18,6 +19,7 @@ def datasetloader(qm_t, qm_f):
     return trX, tsX, trY, tsY
 
 
+# C, solver의 파라미터를 바꿔보면서 Logistic regression model 최적화시키고 history 추출하기
 def train_classifier(trX, trY, tsX, tsY):
     C = np.arange(0.1, 1, 0.2)
     solvers = ['saga', 'liblinear']
@@ -43,6 +45,12 @@ def train_classifier(trX, trY, tsX, tsY):
     return result
 
 
+# train_classifier()의 결과를 통해 test_acc가 가장 높은 hyperparameter로 재구성하는 과정
+# best_model()의 결과로는
+# r1, r2, r3 : [c, solver, test_accuracy 5개의 평균, test_accuracy 5개의 std]
+# cm1, cm2, cm3 : 각 모델의 confusion matrix
+# cnt1, cnt2, cnt3 : 각 모델에서 0이 아닌 weight들의 개수
+# params1, params2, params3. : 각 모델의 weight들
 def best_model(result, tr_x, tr_y, ts_x, ts_y):
     c1, solver1 = result[:3].C[0], result[:3].Solver[0]
     c2, solver2 = result[:3].C[1], result[:3].Solver[1]
