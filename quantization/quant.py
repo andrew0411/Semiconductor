@@ -1,8 +1,10 @@
 import torch
 import numpy as np
 
+
 class Quantization():
     def __init__(self):
+        # __init__ is same as normal code
         f0 = -0.66
         l0 = -0.02
         n0 = 32
