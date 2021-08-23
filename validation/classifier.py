@@ -45,12 +45,12 @@ def train_classifier(trX, trY, tsX, tsY):
     return result
 
 
-# train_classifier()의 결과를 통해 test_acc가 가장 높은 hyperparameter로 재구성하는 과정
+# train_classifier()의 결과를 통해 test_ac c가 가장 높은 hyperparameter 로 재구성하는 과정
 # best_model()의 결과로는
 # r1, r2, r3 : [c, solver, test_accuracy 5개의 평균, test_accuracy 5개의 std]
 # cm1, cm2, cm3 : 각 모델의 confusion matrix
-# cnt1, cnt2, cnt3 : 각 모델에서 0이 아닌 weight들의 개수
-# params1, params2, params3. : 각 모델의 weight들
+# cnt1, cnt2, cnt3 : 각 모델에서 0이 아닌 weight 들의 개수
+# params1, params2, params3. : 각 모델의 weight 들
 def best_model(result, tr_x, tr_y, ts_x, ts_y):
     c1, solver1 = result[:3].C[0], result[:3].Solver[0]
     c2, solver2 = result[:3].C[1], result[:3].Solver[1]
