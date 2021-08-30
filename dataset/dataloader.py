@@ -40,3 +40,23 @@ def cis_scaling(img_set):
 
     return scaled
 
+
+def quarter_data_load():
+    img_t = []
+    img_f = []
+
+    true_path = '1_4/T'
+    false_path = '1_4/F'
+
+    for i in os.listdir(true_path):
+        path = true_path + '/' + i
+        img = np.array(Image.open(path))
+        img_t.append(img)
+
+    for j in os.listdir(false_path):
+        path = false_path + '/' + j
+        img = np.array(Image.open(path))
+        img_f.append(img)
+
+    return img_t, img_f
+
